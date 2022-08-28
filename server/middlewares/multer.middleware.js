@@ -10,13 +10,10 @@ const storageConfig = multer.diskStorage({
     cb(null, `${uuidv4()}${extname(file.originalname)}`)
   }
 })
-// определение фильтра
-const fileFilter = (req, file, cb) => {
 
+const fileFilter = (req, file, cb) => {
   if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
+    file.mimetype === "application/octet-stream"
   ) {
     cb(null, true)
   }

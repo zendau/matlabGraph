@@ -1,4 +1,4 @@
-const UserService = require("../services/user.service")
+const GrafService = require("../services/graf.service")
 const Joi = require("joi")
 const ApiError = require("../exceprions/api.error")
 
@@ -15,7 +15,9 @@ class GrafController {
       // if (error) throw ApiError.HttpException(error.details[0].message)
 
       const { login } = req.body
-      const userData = await UserService.add(login)
+      console.log('!!!!!!', req.file)
+      const userData = await GrafService.readMatlabFile(req.file.path)
+      //const userData = await UserService.add(login)
       // res.cookie('JWTRefreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
       res.json({
         status: true,

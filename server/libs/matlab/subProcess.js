@@ -1,19 +1,19 @@
 const {spawn} = require('child_process')
+const path = require('path')
 
 
-
-module.exports = function(fileName) {
+module.exports = function(filePath) {
     return new Promise((res, rej) => {
         const  dataToSend = []
         try {
-            const pythonProcess = spawn('python', [__dirname +'\\sub.py', fileName])
+            const file = path.join(__dirname, '../..', filePath)
+            const pythonProcess = spawn('python', [`${__dirname}\\sub.py`, file])
 
             pythonProcess.stdout.on('data', function (data) {
-                dataToSend.push(data.toString())
+                dataToSend.push(data.toString().replace("\n", "").replace("\r", ""))
             })
         
             pythonProcess.on('close', (code) => {
-                // Закрытие с кодом 0
                 if (code === 0) {
                     res(dataToSend)
                 } else {
