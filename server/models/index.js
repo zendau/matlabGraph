@@ -13,6 +13,6 @@ const db = {};
 db.sequelize = sequelize;
 
 db.models = {};
-db.models.Graf = require('./graf.model')(sequelize, Sequelize.DataTypes);
+db.models.Chart = require('./chart.model')(sequelize, Sequelize.DataTypes);
 
 module.exports = db;

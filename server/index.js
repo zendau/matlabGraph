@@ -6,7 +6,7 @@ const db = require('./models')
 
 const cors = require('cors')
 
-const userRoute = require("./routes/graf.route")
+const chartRoute = require("./routes/chart.route")
 
 const errorMiddleware = require("./middlewares/error.middleware")
 
@@ -21,7 +21,7 @@ app.use(cors({
   origin: process.env.CLIENT_URL
 }))
 
-app.use("/user", userRoute)
+app.use("/chart", chartRoute)
 
 app.use(errorMiddleware)
 
