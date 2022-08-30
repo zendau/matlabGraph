@@ -5,18 +5,19 @@ const FileService = require('./file.service')
 
 class СhartService {
 
-  async addMatlabFile(filePath) {
+  async addMatlabFile(filePath, title) {
     const fileData = await FileService.decodeMatlabFile(filePath)
-    const inseredRes = await this.add(fileData)
+    const inseredRes = await this.add(fileData, title)
     return inseredRes
   }
 
 
 
-  async add(data) {
+  async add(data, title) {
     const res = await Chart.create({
       id: uuidv4(),
-      data
+      data,
+      title
     })
 
     return res.id

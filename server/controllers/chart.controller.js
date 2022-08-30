@@ -7,12 +7,21 @@ class ChartController {
   async add(req, res, next) {
 
     try {
+
+      const schema = Joi.object({
+        title: Joi.string().min(6).max(20).required()
+      })
+      const { error } = schema.validate(req.body)
+      if (error) throw ApiError.HttpException(error.details[0].message)
+
+      const { title } = req.body
+
       const file = req.file
       if (file === undefined) {
         throw ApiError.HttpException('file is required field and must be one of matlab data type (.mat)')
       }
 
-      const userData = await ChartService.addMatlabFile(file.path)
+      const userData = await ChartService.addMatlabFile(file.path, title)
       res.json({
         status: true,
         path: userData
