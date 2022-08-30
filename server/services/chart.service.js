@@ -25,7 +25,7 @@ class СhartService {
 
   async getList() {
     const res = await Chart.findAll({
-      attributes: ['id']
+      attributes: ['id', 'title']
     })
 
     return res
