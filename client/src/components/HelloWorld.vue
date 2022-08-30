@@ -11,8 +11,8 @@
   </v-form>
   <v-progress-circular :size="80" :width="7" color="green" indeterminate>
   </v-progress-circular>
-  <v-alert type="success" max-width="300" height="60" >test</v-alert>
-  <v-alert type="error" max-width="300" height="60" >test</v-alert>
+  <v-alert type="success" max-width="300" height="60">test</v-alert>
+  <v-alert type="error" max-width="300" height="60">test</v-alert>
 
 </template>
 
@@ -50,11 +50,24 @@ export default {
       })
 
       if (resData.status) {
-        console.log(resData.data.path)
+        this.addToLocalStore(resData.data.chart)
+        this.$router.push(`/chart/${resData.data.chart.id}`)
       } else {
         // TODO: Добавить обработку ошибки с алертом
         console.lo('error')
       }
+    },
+    addToLocalStore(chartData) {
+      // TODO: мб добавить в utils
+      let userCharts = JSON.parse(localStorage.getItem(process.env.VUE_APP_LOCAL_STORE_CHARTS))
+      if (userCharts) {
+        userCharts.push(chartData)
+      } else {
+        userCharts = []
+        userCharts.push(chartData)
+      }
+
+      localStorage.setItem(process.env.VUE_APP_LOCAL_STORE_CHARTS, JSON.stringify(userCharts))
     },
     updateFileData(test) {
       console.log('test', test)

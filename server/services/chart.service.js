@@ -20,7 +20,10 @@ class СhartService {
       title
     })
 
-    return res.id
+    return {
+      id: res.id,
+      title: res.title
+    }
   }
 
   async getList() {

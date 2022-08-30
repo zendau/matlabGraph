@@ -24,7 +24,7 @@ class ChartController {
       const userData = await ChartService.addMatlabFile(file.path, title)
       res.json({
         status: true,
-        path: userData
+        chart: userData
       })
     } catch (e) {
       next(e)
