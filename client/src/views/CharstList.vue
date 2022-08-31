@@ -1,18 +1,16 @@
 <template>
-  <v-progress-circular v-if="isLoading" :size="80" :width="7" color="green" indeterminate></v-progress-circular>
-  <ul v-if="chartsData.length">
-    <li v-for="item in chartsData" :key="item.id">
-      <router-link :to="`/chart/${item.id}`">{{  item.title  }}</router-link>
-    </li>
-  </ul>
-  <div v-else>Not have charts</div>
+  <charDataList :isLoading="isLoading" :chartsData="chartsData" />
 </template>
 
 <script>
 
 import axios from 'axios'
+import charDataList from '@/components/chartDataList.vue'
 
 export default {
+  components: {
+    charDataList
+  },
   data: () => ({
     chartsData: [],
     isLoading: false
