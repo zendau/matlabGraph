@@ -1,18 +1,17 @@
 <template>
-  <HelloWorld />
+  <chartForm />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
-// Components
-import HelloWorld from '../components/HelloWorld.vue';
+
+import chartForm from '@/components/chartForm.vue';
 
 export default defineComponent({
-  name: 'HomeView',
-
+  name: 'mainPage',
   components: {
-    HelloWorld,
+    chartForm,
   },
 });
 </script>
