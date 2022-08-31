@@ -5,7 +5,10 @@
       {{ isError }}
     </div>
     <div v-else>
-      {{ chartData }}
+      <!-- {{ chartData }} -->
+      <canvas ref="canvas"></canvas>
+      <v-slider v-model="max" min="0" max="5"  rounded @update:modelValue="updateSlider"  label="Max characters">
+      </v-slider>
     </div>
   </div>
 </template>
@@ -13,9 +16,10 @@
 <script>
 
 import axios from 'axios'
+import chart from '@/utils/chart'
 
 export default {
-  data: () => ({ rating: 3, isError: '', chartData: 'test' }),
+  data: () => ({ rating: 3, isError: '', chartData: 'test', max: 5 }),
   async mounted() {
 
 
@@ -23,13 +27,20 @@ export default {
 
     try {
       const resData = await axios.get(`${process.env.VUE_APP_API}/chart/get/${chartID}`)
-      this.chartData = resData.data.chart.data
+      this.chartData = JSON.parse(resData.data.chart.data)
+      chart(this.$refs.canvas, this.chartData, 5)
     } catch (e) {
+      console.log(e)
       this.isError = e.response.data.message
     }
 
 
 
+  },
+  methods: {
+    updateSlider() {
+      chart(this.$refs.canvas, this.chartData, Math.round(this.max))
+    }
   }
 }
 </script>
