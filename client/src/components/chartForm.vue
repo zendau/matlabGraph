@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex flex-column align-center justify-center fill-height">
-    <h1>Add matlab data file</h1>
-    <v-alert v-if="errorMessage" type="error" max-width="600" height="60">{{ errorMessage }}</v-alert>
+    <h1 class="mb-5" >Add matlab data file</h1>
+    <v-alert v-if="errorMessage" type="error" max-width="600" max-height="60" class="mb-5">{{ errorMessage }}</v-alert>
     <v-form ref="form" v-model="valid" lazy-validation class="w-75 d-flex flex-column align-center">
       <v-text-field prepend-icon="mdi-clipboard-outline" v-model="name" :counter="10" :rules="nameRules" label="Name"
         required class="w-100"></v-text-field>
@@ -12,7 +12,7 @@
         Create chart
       </v-btn>
     </v-form>
-    <v-progress-linear v-if="isLoading" indeterminate value="15"></v-progress-linear>
+    <v-progress-linear class="mt-5" v-if="isLoading" indeterminate value="15"></v-progress-linear>
   </v-container>
 </template>
 
