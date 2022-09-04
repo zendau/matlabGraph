@@ -36,7 +36,7 @@ class СhartService {
 
   async getOne(id) {
     const res = await Chart.findByPk(id, {
-      attributes: ['id', 'data']
+      attributes: ['id', 'data', 'title']
     })
 
     if (res === null) throw ApiError.PageNotFoundError(`Not found chart with id - ${id}`)

@@ -19,25 +19,33 @@ export default class DrawChart {
 
     CANVAS
 
-    constructor(canvas) {
+    chartData
 
+    SMOOT
+
+    constructor(canvas, data) {
 
         this.CANVAS = canvas
+        this.chartData = data
 
         this.PADDING = 50
         this.ROWS_COUNT = 5
+        this.SMOOT = 5
 
-        
+        this.getRandomColors()
+    }
 
-        this.COLORS = [
-            "#F50818",
-            "#EC0FF6",
-            "#F64D25",
-            "#3176D4",
-            "#31A1D4",
-            "#3FADD4",
-            "#D4B53F"
-        ]
+    getRandomColors() {
+
+        this.COLORS = []
+
+        for (let i = 0; i < this.chartData.length - 1; i++) {
+            const hue = Math.floor(Math.random() * 360);
+            const saturation = Math.floor(Math.random() * (100 + 1)) + "%";
+            const lightness = "50%";
+            const rdmColor = `hsl(${hue},${saturation}, ${lightness})`;
+            this.COLORS.push(rdmColor)
+        }
     }
 
     getCanvasDimensions() {
@@ -54,7 +62,11 @@ export default class DrawChart {
         this.VIEW_WIDTH = this.DPI_WIDTH
     }
 
-    draw(data, SMOOT = 1) {
+    set updateSmoot(value) {
+        this.SMOOT = value
+    }
+
+    draw() {
         this.getCanvasDimensions()
 
         // Создание холста
@@ -62,15 +74,15 @@ export default class DrawChart {
 
 
         // Получение данных для построения
-        const xData = data[0]
+        const xData = this.chartData[0]
         // Получение всех колонок 'y', кроме первой 'x'
-        const yData = data.filter((_, i) => i !== 0)
+        const yData = this.chartData.filter((_, i) => i !== 0)
 
 
         // Определяем размеры холста
         this.CANVAS.width = this.DPI_WIDTH
         this.CANVAS.height = this.DPI_HEIGHT
-
+        console.log(this.DPI_HEIGHT, this.DPI_WIDTH)
 
         // Находим минимальные и максимальные значения
         const [yMin, yMax] = this.getMinMax(yData)
@@ -101,11 +113,11 @@ export default class DrawChart {
 
 
             // Сглаживание графика
-            for (let i = 0; i < SMOOT; i++) {
+            for (let i = 0; i < this.SMOOT; i++) {
                 coords = this.roundData(coords)
             }
 
-            //const rdmColor = '' + (Math.random().toString(16) + '000000').substring(2,8).toUpperCase()
+
 
             // Отрисовывание линии
             this.drawLine(ctx, coords, this.COLORS[index])
