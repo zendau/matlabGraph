@@ -3,7 +3,7 @@
     <h1 class="mb-5" >Add matlab data file</h1>
     <v-alert v-if="errorMessage" type="error" max-width="600" max-height="60" class="mb-5">{{ errorMessage }}</v-alert>
     <v-form ref="form" v-model="valid" lazy-validation class="w-75 d-flex flex-column align-center">
-      <v-text-field prepend-icon="mdi-clipboard-outline" v-model="name" :counter="10" :rules="nameRules" label="Name"
+      <v-text-field prepend-icon="mdi-clipboard-outline" v-model="name" :counter="15" :rules="nameRules" label="Name"
         required class="w-100"></v-text-field>
       <v-file-input accept=".mat" label="File input" :rules="fileRules" show-size clearable class="w-100"
         @update:modelValue="updateFileData">
@@ -26,7 +26,7 @@ export default {
     name: '',
     nameRules: [
       v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      v => (v && v.length <= 15) || 'Name must be less than 15 characters',
       v => (v && v.length >= 4) || 'Name must be bigger than 4 characters',
     ],
     fileRules: [
@@ -66,7 +66,6 @@ export default {
       }
     },
     addToLocalStore(chartData) {
-      // TODO: мб добавить в utils
       let userCharts = JSON.parse(localStorage.getItem(process.env.VUE_APP_LOCAL_STORE_CHARTS))
       if (userCharts) {
         userCharts.push(chartData)
@@ -78,7 +77,6 @@ export default {
       localStorage.setItem(process.env.VUE_APP_LOCAL_STORE_CHARTS, JSON.stringify(userCharts))
     },
     updateFileData(test) {
-      console.log('test', test)
       this.file = test[0]
     }
   },

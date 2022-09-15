@@ -9,7 +9,7 @@ class ChartController {
     try {
 
       const schema = Joi.object({
-        title: Joi.string().min(6).max(20).required()
+        title: Joi.string().min(4).max(15).required()
       })
       const { error } = schema.validate(req.body)
       if (error) throw ApiError.HttpException(error.details[0].message)

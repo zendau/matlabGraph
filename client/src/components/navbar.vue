@@ -1,9 +1,7 @@
 <template>
   <v-app-bar color="gray" prominent>
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
     <v-toolbar-title>Matlab chart</v-toolbar-title>
-
   </v-app-bar>
   <v-navigation-drawer v-if="drawer" disable-resize-watcher permanent>
     <v-list density="compact" nav>
