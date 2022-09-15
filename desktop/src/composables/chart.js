@@ -1,6 +1,7 @@
 export default class DrawChart {
 
     constructor(canvas, data) {
+        console.log('data', data)
         this.canvas = canvas
         this.chartData = data
 

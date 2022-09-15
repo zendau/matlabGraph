@@ -5,11 +5,11 @@
       <v-alert type="error" v-if="isError">{{ isError }}</v-alert>
       <div v-else>
         <div class="chart__header">
-          <h1>Chart - {{this.title}}</h1>
+          <h1>Chart - {{chartData.title}}</h1>
           <v-btn @click="isOpenSetting = !isOpenSetting" color="green">{{isOpenSetting ? 'Close' : 'Open'}} settings
           </v-btn>
         </div>
-        <chartCanvas :chartData="chartData" :isOpenSetting="isOpenSetting" />
+        <chartCanvas :chartData="chartData.data" :isOpenSetting="isOpenSetting" />
         <v-divider class="ma-5"></v-divider>
         <chartTable :tableData="tableData" />
       </div>
@@ -23,22 +23,24 @@
 
 import chartTable from '@/components/chartTable.vue'
 import chartCanvas from '@/components/chartCanvas.vue'
+import Store from 'electron-store';
+
+const store = new Store();
+
 
 export default {
   components: { chartTable, chartCanvas },
   data: () => ({
-    isError: '', chartData: [], tableData: [], title: null, isOpenSetting: false, isLoading: true
+    isError: '', chartData: [], tableData: [], isOpenSetting: false, isLoading: true
   }),
   async mounted() {
     this.isLoading = true
-    //const chartID = this.$route.params.id
+    const chartId = this.$route.params.id
 
     try {
       //const resData = await axios.get(`${process.env.VUE_APP_API}/chart/get/${chartID}`)
-
-      //this.chartData = JSON.parse(resData.data.chart.data)
-      //this.title = resData.data.chart.title
-      this.tableBody(this.chartData)
+      this.chartData = store.get(chartId)
+      this.tableBody(this.chartData.data)
     } catch (e) {
       if (e.code === 'ERR_NETWORK') {
         this.isError = 'Server is not available'

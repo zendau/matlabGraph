@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex flex-column align-center justify-center fill-height">
-    <h1 class="mb-5" >Add matlab data file</h1>
+    <h1 class="mb-5">Add matlab data file</h1>
     <v-alert v-if="errorMessage" type="error" max-width="600" max-height="60" class="mb-5">{{ errorMessage }}</v-alert>
     <v-form ref="form" v-model="valid" lazy-validation class="w-75 d-flex flex-column align-center">
       <v-text-field prepend-icon="mdi-clipboard-outline" v-model="name" :counter="15" :rules="nameRules" label="Name"
@@ -22,6 +22,10 @@
 import matlabConverter from '@/libs/matlab/subProcess'
 import * as uuid from 'uuid'
 
+import Store from 'electron-store';
+
+const store = new Store();
+
 
 export default {
   data: () => ({
@@ -39,18 +43,21 @@ export default {
     isLoading: false,
     errorMessage: null
   }),
+  mounted() {
+    console.log(store.store)
+  },
   methods: {
     async validate() {
       const res = await this.$refs.form.validate()
       if (res.valid === false) return
-      
+
       try {
         this.isLoading = true
         const resMatlab = await matlabConverter(this.file.path)
         const chartData = {
           id: uuid.v4(),
           title: this.name,
-          data: resMatlab
+          data: JSON.parse(resMatlab[0])
         }
 
         this.addToLocalStore(chartData)
@@ -60,18 +67,10 @@ export default {
       } finally {
         this.isLoading = false
       }
-    
+
     },
     addToLocalStore(chartData) {
-      let userCharts = JSON.parse(localStorage.getItem(process.env.VUE_APP_LOCAL_STORE_CHARTS))
-      if (userCharts) {
-        userCharts.push(chartData)
-      } else {
-        userCharts = []
-        userCharts.push(chartData)
-      }
-
-      localStorage.setItem(process.env.VUE_APP_LOCAL_STORE_CHARTS, JSON.stringify(userCharts))
+      store.set(chartData.id, chartData);
     },
     updateFileData(test) {
       this.file = test[0]
