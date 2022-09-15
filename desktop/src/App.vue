@@ -1,26 +1,20 @@
 <template>
   <v-app>
+    <navbar/>
     <v-main>
-      <HelloWorld/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import * as path from 'path'
+
+import navbar from './components/navbar.vue';
 
 export default {
-  name: 'App',
-
   components: {
-    HelloWorld,
+    navbar
   },
-  mounted() {
-    console.log('path', path)
-  },
-  data: () => ({
-    //
-  }),
+  name: 'App',
 }
 </script>

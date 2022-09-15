@@ -4,7 +4,8 @@ module.exports = defineConfig({
 
   pluginOptions: {
     electronBuilder: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      mainProcessWatch: ['src/libs/matlab/sub.exe'],
     },
     vuetify: {
 			// https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
