@@ -7,7 +7,8 @@ module.exports = function(filePath) {
         const  dataToSend = []
         try {
             const file = path.join(__dirname, '../..', filePath)
-            const pythonProcess = spawn('python', [`${__dirname}\\sub.py`, file])
+            console.log(file, `${__dirname}\\sub.py`)
+            const pythonProcess = spawn('python3', [`${__dirname}/sub.py`, file])
 
             pythonProcess.stdout.on('data', function (data) {
                 dataToSend.push(data.toString().replace("\n", "").replace("\r", ""))

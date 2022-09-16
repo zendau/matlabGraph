@@ -11,6 +11,16 @@ WORKDIR /app/server
 COPY package*.json ./
 RUN npm install
 RUN npm install nodemon -g
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.5 \
+    python3-pip \
+    && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install scipy numpy
+
 # Copy our app
 COPY . .
 
