@@ -1,9 +1,9 @@
 <template>
-  <div class="fill-height d-flex justify-center align-center">
+  <div class="fill-height d-flex justify-center align-center w-100">
     <v-progress-circular v-if="isLoading" :size="90" :width="7" color="blue" indeterminate></v-progress-circular>
-    <div v-else class="w-100">
-      <v-list v-if="chartsData.length">
-        <v-list-item v-for="item in chartsData" :key="item.id" class="text-center" :title="item.title"
+    <div v-else class="w-100" >
+      <v-list v-if="chartsData.length"  >
+        <v-list-item  class="text-center" v-for="item in chartsData" :key="item.id"  :title="item.title"
           :to="`/chart/${item.id}`">
         </v-list-item>
       </v-list>

@@ -19,8 +19,6 @@
 
 <script>
 
-//import axios from 'axios'
-
 import chartTable from '@/components/chartTable.vue'
 import chartCanvas from '@/components/chartCanvas.vue'
 import Store from 'electron-store';
@@ -38,15 +36,10 @@ export default {
     const chartId = this.$route.params.id
 
     try {
-      //const resData = await axios.get(`${process.env.VUE_APP_API}/chart/get/${chartID}`)
       this.chartData = store.get(chartId)
       this.tableBody(this.chartData.data)
-    } catch (e) {
-      if (e.code === 'ERR_NETWORK') {
-        this.isError = 'Server is not available'
-      } else {
-        this.isError = e.response.data.message
-      }
+    } catch {
+      this.isError = 'Something went wrong'
     } finally {
       this.isLoading = false
     }

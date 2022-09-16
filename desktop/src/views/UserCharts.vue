@@ -34,7 +34,6 @@ export default {
         console.log(this.chartsData)
       }
     } catch (e) {
-      console.log('e', e)
       this.isError = e
     }
 
